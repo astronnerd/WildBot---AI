@@ -4,7 +4,7 @@
 
 WildBot is a Gen AI-Powered Chat Tool for Research Data Scraping and Interaction on wildlife, biodiversity, and conservation topics. The project integrates:
 
-- **Generative AI:** Uses a Hugging Face model (e.g., `google/flan-t5-xl`) to generate detailed, research-backed responses.
+- **Generative AI:** Uses a Hugging Face model (`google/flan-ul2`) to generate detailed, research-backed responses.
 - **Data Scraping:** Fetches research papers via the Semantic Scholar API.
 - **Visual Enhancements:** Retrieves relevant wildlife images using the Pixabay API.
 - **Themed UI:** A React-based frontend with a custom wildlife-themed design.
@@ -14,6 +14,7 @@ WildBot is a Gen AI-Powered Chat Tool for Research Data Scraping and Interaction
 ## Architecture & Tools
 
 ### Backend
+
 - **Language:** Python 3.x
 - **Framework:** Flask
 - **Key Libraries:**
@@ -24,6 +25,49 @@ WildBot is a Gen AI-Powered Chat Tool for Research Data Scraping and Interaction
   - **Hugging Face API:** For AI-generated responses.
   - **Semantic Scholar API:** For research paper data.
   - **Pixabay API:** For wildlife images.
+- **Models Used**
+  - **Primary Model: FLAN-UL2**
+    - What It Is: FLAN-UL2 is an instruction-tuned language model by Google. It is designed to follow detailed instructions and provide nuanced, in-depth responses.
+    - Why We Use It: It is capable of generating comprehensive, multi-paragraph answers with evidence-based analysis, which is essential for a professional research chatbot.
+    - Limitations: FLAN-UL2 can be memory intensive. On free Hugging Face endpoints, it may encounter CUDA out-of-memory errors if resource limits are exceeded.
+  - **Fallback Models: FLAN-T5-LARGE, FLAN-T5-BASE**
+    - What It Is: FLAN-T5-Base is a smaller, less resource-intensive version of the FLAN family. Although it may not be as detailed as FLAN-UL2, it is more likely to run successfully under constrained resources.
+    - Fallback Usage: If FLAN-UL2 fails due to memory limitations (e.g., CUDA out-of-memory), the backend falls back to using FLAN-T5-Base with adjusted generation parameters.
+      
+- Backend Code Explanation
+  -> Framework and Setup
+    * Flask: The backend is built using Flask, a lightweight Python web framework. Flask handles incoming HTTP POST requests on the /api/chat endpoint.
+    * Environment Variables: API keys for Hugging Face, Pixabay, and the Semantic Scholar base URL are set via environment variables or directly in the code.
+      
+  -> Request Flow
+    1. Receive Query: When a POST request is made to /api/chat, the JSON payload is parsed to extract the user’s query.
+    2. Generate AI Response:
+        * A detailed prompt is constructed that instructs the model to provide a multi-paragraph, evidence-based answer.
+        * The prompt is sent to the Hugging Face Inference API.
+        * Primary Call: Uses FLAN-UL2 with parameters (e.g., max_new_tokens: 250, temperature: 0.8).
+        * Fallback Mechanism: If a 500 error due to CUDA out-of-memory occurs, the backend switches to FLAN-T5-Base with reduced token limits (e.g., 200 tokens) to try and generate a response.
+    3. Data Scraping (Research Papers):
+        * If the query contains wildlife-related keywords (e.g., "wildlife", "animals", "flora", "fauna", etc.), the backend makes a GET request to the Semantic Scholar API.
+        * It requests the top 3 relevant research papers including the title, abstract, and URL.
+        * The resulting papers provide scientific backing for the generated answer.
+    4. Image Retrieval:
+        * The backend calls the Pixabay API to search for relevant images using the query.
+        * It returns up to 3 image URLs, with a fallback default image if no results are found.
+    5. Response Construction: The final JSON response includes:
+        * "answer": The generated AI response.
+        * "research": A list of research papers (if any).
+        * "images": A list of image URLs.
+        * "image_url": The first image URL, typically used for display.
+  
+    **Data Scraping of Research Papers**
+    -> Semantic Scholar Integration
+      * Endpoint: The code uses the Semantic Scholar API (via https://api.semanticscholar.org/graph/v1/paper/search) to search for research papers.
+      * Parameters:
+          * query: The user's query.
+          * limit: Set to 3 to retrieve the top three papers.
+          * fields: Specifies which details to retrieve (e.g., title, abstract, URL).
+      * Processing: The JSON response is parsed, and a list of research papers is constructed. Each paper in the list includes the title, abstract, and a link to the full document.
+      * Usage: These research papers are included in the final response to provide users with scientific sources that back up the chatbot's answer.
 
 ### Frontend
 - **Framework:** React (via Create React App)
