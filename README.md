@@ -46,14 +46,13 @@ WildBot/
 │   ├── requirements.txt
 │   └── venv/           # Python virtual environment folder
 ├── frontend/
-│   └── wildbot-frontend/
-│       ├── public/
-│       │   └── index.html
-│       ├── src/
-│       │   ├── App.js
-│       │   ├── App.css
-│       │   └── index.js
-│       └── package.json
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── App.js
+│   │   ├── App.css
+│   │   └── index.js
+│   └── package.json
 └── start.sh            # Automation script to run backend and frontend
 
 ---
@@ -89,7 +88,7 @@ WildBot/
 
 ### 2. Frontend Setup
 
-1. **Navigate to the `frontend/wildbot-frontend` folder.**
+1. **Navigate to the frontend` folder.**
 
 2. **Install Dependencies:**
 
@@ -135,7 +134,7 @@ A script (start.sh) is provided to start both the backend and frontend. Save thi
 
        # Start React frontend
        echo "Starting React frontend..."
-       cd frontend/wildbot-frontend
+       cd frontend
        npm start
 
 ### How to Run
@@ -174,7 +173,7 @@ This will launch the Flask backend (listening on port 5000) and the React app (u
 
 **Option: Vercel or Netlify (Free Tier)**
 1. Sign up at https://vercel.com/ or https://www.netlify.com/.
-2. Connect your GitHub repository and select the wildbot-frontend project.
+2. Connect your GitHub repository and select the frontend project.
 3. For Vercel:
    - The default settings work for Create React App (build command: npm run build, output directory: build).
 4. For Netlify:
