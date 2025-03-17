@@ -165,22 +165,6 @@ A script (start.sh) is provided to start both the backend and frontend. Save thi
 
 #### start.sh
 
-       #!/bin/bash
-
-       # Start Flask backend
-       echo "Starting Flask backend..."
-       cd backend
-       source venv/bin/activate
-       python3 app.py &
-       BACKEND_PID=$!
-       echo "Flask backend started with PID $BACKEND_PID"
-       cd ..
-
-       # Start React frontend
-       echo "Starting React frontend..."
-       cd frontend
-       npm start
-
 ### How to Run
 
 1. **Make the script executable:**
