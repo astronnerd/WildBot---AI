@@ -227,29 +227,3 @@ This will launch the Flask backend (listening on port 5000) and the React app (u
 > **Note:** After deploying, update your React app’s API endpoint (if needed) to point to the deployed backend URL.
 
 ---
-
-## Next Steps & Debugging
-
-### Debugging the Model Response Error
-
-- **Check Logs:**  
-  In your Flask backend, add print statements in the query_huggingface function to output the status code and response text.
-- **Model Warm-Up:**  
-  Note that Hugging Face models might take a moment to load on the first call. Consider adding a retry mechanism if needed.
-- **Alternative Models:**  
-  Test with another model if the current one continues to produce errors.
-
-### UI Enhancements
-
-- **Background & Overlay:**  
-  The CSS in index.css or App.css sets a full-page wildlife background. Adjust the URL and styling to suit your theme.
-- **Interactive Elements:**  
-  Consider using icon libraries (e.g., Font Awesome) and animations (CSS transitions, keyframes, or the AOS library) to further enrich the experience.
-- **Custom Components:**  
-  Create a header with a wildlife logo or additional cards for research papers to improve layout and interactivity.
-
----
-
-This documentation provides a comprehensive overview of WildBot, including setup instructions, an automation script, and deployment guidance using free services. Once these steps are in place, you can revisit debugging the Hugging Face model response error if needed.
-
-Happy coding and best of luck with your hackathon demo!
