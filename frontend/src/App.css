@@ -1,0 +1,117 @@
+/* Original Green Gradient Background */
+body {
+  margin: 0;
+  padding: 0;
+  background: #50948e;
+  background: -webkit-linear-gradient(to right, #50948e, #90a84c, #f2b75e);
+  background: linear-gradient(to right, #50948e, #90a84c, #f2b75e);
+  font-family: Arial, sans-serif;
+}
+
+/* Chat window container with an extremely light grey background */
+.App {
+  background: rgba(240, 240, 240, 0.95);
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 100;
+}
+
+/* Signature container fixed at top right, outside the chat window */
+.signature-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #444;
+  z-index: 101;
+}
+
+/* Header styles inside chat window */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #2e7d32;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #555;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.chat-input {
+  width: 70%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 1rem;
+  background-color: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #1b5e20;
+}
+
+/* Response container */
+.response-container {
+  text-align: left;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+.chat-response, .research-section, .image-section {
+  margin-bottom: 20px;
+}
+.chat-response h2, .research-section h3, .image-section h3 {
+  margin-top: 0;
+  color: #2e7d32;
+}
+
+/* Voice Input Button Styles */
+.voice-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.voice-button:hover {
+  background-color: #0056b3;
+}
