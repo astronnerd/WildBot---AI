@@ -262,7 +262,7 @@ def extract_relevant_context(query, chat_history, max_lines=10, similarity_thres
         lines_with_scores.append((score, sender, line))
     
     # Sort by similarity score and filter by threshold
-    lines_with_scores = x(lines_with_scores, key=lambda x: x[0], reverse=True)
+    lines_with_scores = sorted(lines_with_scores, key=lambda x: x[0], reverse=True)
     relevant_lines = [(sender, line) for score, sender, line in lines_with_scores if score > similarity_threshold][:max_lines]
     
     # Sort the selected lines by their original order
