@@ -1,2 +1,4 @@
 .git
 
+frontend/node_modules
+backend/app.log
