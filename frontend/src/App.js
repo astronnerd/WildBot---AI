@@ -135,7 +135,7 @@ function App() {
       </div>
 
       <div className="form-container">
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' ,padding: '10px'}}>
           <TextField sx={{ mb: 2 }}
             fullWidth
             variant="outlined"
