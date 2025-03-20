@@ -3,13 +3,17 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   padding: 20px;
+  flex: 1;
 }
 
 .signature-container {
@@ -24,6 +28,8 @@ body {
   max-width: 100%;
   margin-left: 10px;
   margin-right: 10px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .message {
@@ -92,4 +98,25 @@ body {
 
 .research-container a:hover {
   text-decoration: underline;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 80%;
+  padding: 20px;
+  background-color: white;
+  border-top: 1px solid #ccc;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }

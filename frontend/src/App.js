@@ -10,9 +10,8 @@ function App() {
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
 
-  // Load chat history from local storage on mount
+  // Set up speech recognition on mount if supported
   useEffect(() => {
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
@@ -53,13 +52,13 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
-  
+
     // Add user message to state
     const newMessages = [...messages, { text: query, sender: 'user' }];
     setMessages(newMessages);
     setLoading(true);
     setQuery("");
-  
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -71,7 +70,7 @@ function App() {
       }
       const data = await res.json();
       console.log("Bot response:", data);
-  
+
       // Add bot response to state
       setMessages([...newMessages, { text: data.answer, sender: 'bot', research: data.research }]);
     } catch (error) {
@@ -82,7 +81,7 @@ function App() {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className="App">
       <Box className="signature-container" textAlign="right" mb={2}>
         developed with ❤️ & ☕️ by<br />
         ~ Codes N' Roses
@@ -96,31 +95,6 @@ function App() {
           An AI-powered tool that scrapes research data and delivers comprehensive insights on wildlife, biodiversity, and conservation topics.
         </Typography>
       </Paper>
-
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
-        <TextField sx={{ mb: 2 }}
-          fullWidth
-          variant="outlined"
-          placeholder="Ask me about wildlife, biodiversity, or conservation..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="chat-input"
-        />
-        <div className="button-container">
-          <Button sx={{ mr: 2 }} variant="contained" color="primary" onClick={startListening} className="voice-button">
-            {listening ? "Listening..." : "Voice Input"}
-          </Button>
-          <Button variant="contained" color="primary" type="submit" className="submit-button">
-            Send
-          </Button>
-        </div>
-      </form>
-
-      {loading && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-          <img src="/running_tiger.gif" alt="Loading..." style={{ width: '100px', height: '100px' }} />
-        </div>
-      )}
 
       <div className="chat-container">
         {messages.map((message, index) => (
@@ -156,6 +130,33 @@ function App() {
           </Paper>
         ))}
       </div>
+
+      <div className="form-container">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+          <TextField sx={{ mb: 2 }}
+            fullWidth
+            variant="outlined"
+            placeholder="Ask me about wildlife, biodiversity, or conservation..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="chat-input"
+          />
+          <div className="button-container">
+            <Button sx={{ mr: 2 }} variant="contained" color="primary" onClick={startListening} className="voice-button">
+              {listening ? "Listening..." : "Voice Input"}
+            </Button>
+            <Button variant="contained" color="primary" type="submit" className="submit-button">
+              Send
+            </Button>
+          </div>
+        </form>
+      </div>
+
+      {loading && (
+        <div className="loading-overlay">
+        <img src="/running_tiger.gif" alt="Loading..." style={{ width: '100px', height: '100px' }} />
+      </div>
+      )}
     </Container>
   );
 }
