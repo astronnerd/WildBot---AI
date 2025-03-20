@@ -1,117 +1,95 @@
-/* Original Green Gradient Background */
 body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background: #50948e;
-  background: -webkit-linear-gradient(to right, #50948e, #90a84c, #f2b75e);
-  background: linear-gradient(to right, #50948e, #90a84c, #f2b75e);
-  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
 }
 
-/* Chat window container with an extremely light grey background */
 .App {
-  background: rgba(240, 240, 240, 0.95);
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-  z-index: 100;
-}
-
-/* Signature container fixed at top right, outside the chat window */
-.signature-container {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #444;
-  z-index: 101;
-}
-
-/* Header styles inside chat window */
-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-  color: #2e7d32;
-}
-
-.description {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: #555;
-}
-
-/* Form styles */
-form {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.signature-container {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.user-message {
+  background-color: #DCF8C6;
+  color: coral; /* User text color */
+  align-self: flex-end;
+  max-width: 60%; /* User message max width */
+}
+
+.bot-message {
+  background-color: #F1F0F0;
+  color: #18f662; /* Bot text color */
+  align-self: flex-start;
+  max-width: 60%; /* Bot message max width */
+}
+
+.message-icon {
+  margin-right: 10px;
+  color: navy;
 }
 
 .chat-input {
-  width: 70%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 10px; /* Added margin-bottom for spacing */
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%; /* Ensure the buttons container takes full width */
+}
+
+.voice-button {
+  margin-right: 10px; /* Added margin-right for spacing */
+  min-width: 150px; /* Adjusted width */
 }
 
 .submit-button {
-  padding: 10px 20px;
-  margin-left: 10px;
-  font-size: 1rem;
-  background-color: #2e7d32;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  min-width: 150px;
+}
+.research-container {
+  margin-top: 10px;
 }
 
-.submit-button:hover {
-  background-color: #1b5e20;
+.research-container ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-/* Response container */
-.response-container {
-  text-align: left;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-.chat-response, .research-section, .image-section {
-  margin-bottom: 20px;
-}
-.chat-response h2, .research-section h3, .image-section h3 {
-  margin-top: 0;
-  color: #2e7d32;
+.research-container li {
+  margin-bottom: 5px;
 }
 
-/* Voice Input Button Styles */
-.voice-button {
-  padding: 10px 20px;
-  margin-left: 10px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.research-container a {
+  color: #007bff;
+  text-decoration: none;
 }
 
-.voice-button:hover {
-  background-color: #0056b3;
+.research-container a:hover {
+  text-decoration: underline;
 }

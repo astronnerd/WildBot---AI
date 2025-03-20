@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Container, TextField, Button, Paper, Typography, Box } from '@mui/material';
+import { AccountCircle, SmartToy } from '@mui/icons-material';
 import './App.css';
 
 function App() {
   const [query, setQuery] = useState("");
-  const [responseData, setResponseData] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
 
-  // Set up speech recognition on mount if supported
+  // Load chat history from local storage on mount
   useEffect(() => {
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
@@ -35,6 +38,11 @@ function App() {
     }
   }, []);
 
+  // Save chat history to local storage whenever messages update
+  useEffect(() => {
+    localStorage.setItem('chatHistory', JSON.stringify(messages));
+  }, [messages]);
+
   const startListening = () => {
     if (recognitionRef.current) {
       setListening(true);
@@ -45,95 +53,110 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
+  
+    // Add user message to state
+    const newMessages = [...messages, { text: query, sender: 'user' }];
+    setMessages(newMessages);
     setLoading(true);
-    setResponseData(null);
+    setQuery("");
+  
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query, chatHistory: newMessages })
       });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       const data = await res.json();
-      setResponseData(data);
+      console.log("Bot response:", data);
+  
+      // Add bot response to state
+      setMessages([...newMessages, { text: data.answer, sender: 'bot', research: data.research }]);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setResponseData({ error: "An error occurred. Please try again." });
+      setMessages([...newMessages, { text: "An error occurred. Please try again.", sender: 'bot' }]);
     }
     setLoading(false);
   };
 
   return (
-    <div className="App">
-      {/* Fixed signature container at top right */}
-      <div className="signature-container">
+    <Container maxWidth="md">
+      <Box className="signature-container" textAlign="right" mb={2}>
         developed with ❤️ & ☕️ by<br />
         ~ Codes N' Roses
-      </div>
+      </Box>
 
-      {/* Main Chat Window */}
-      <header>
-        <h1>WildWise - AI: Wildlife Research Chat</h1>
-        <p className="description">
-          <br />
+      <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+        <Typography variant="h4" gutterBottom>
+          WildWise - AI: Wildlife Research Chat
+        </Typography>
+        <Typography variant="body1" gutterBottom>
           An AI-powered tool that scrapes research data and delivers comprehensive insights on wildlife, biodiversity, and conservation topics.
-          <br />
-          <br />
-        </p>
-      </header>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+        </Typography>
+      </Paper>
+
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
+        <TextField sx={{ mb: 2 }}
+          fullWidth
+          variant="outlined"
           placeholder="Ask me about wildlife, biodiversity, or conservation..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="chat-input"
         />
-        <button type="button" onClick={startListening} className="voice-button">
-          {listening ? "Listening..." : "Voice Input"}
-        </button>
-        <button type="submit" className="submit-button">Send</button>
+        <div className="button-container">
+          <Button sx={{ mr: 2 }} variant="contained" color="primary" onClick={startListening} className="voice-button">
+            {listening ? "Listening..." : "Voice Input"}
+          </Button>
+          <Button variant="contained" color="primary" type="submit" className="submit-button">
+            Send
+          </Button>
+        </div>
       </form>
-      {loading && <p>Loading...</p>}
-      {responseData && (
-        <div className="response-container">
-          {responseData.error ? (
-            <p>{responseData.error}</p>
-          ) : (
-            <>
-              <div className="chat-response">
-                <h2>Answer:</h2>
-                <p>{responseData.answer}</p>
-              </div>
-              {responseData.research && (
-                <div className="research-section">
-                  <h3>Research Papers:</h3>
-                  {responseData.research.length > 0 ? (
+
+      {loading && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
+          <img src="/running_tiger.gif" alt="Loading..." style={{ width: '100px', height: '100px' }} />
+        </div>
+      )}
+
+      <div className="chat-container">
+        {messages.map((message, index) => (
+          <Paper
+            key={index}
+            className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
+            style={{ padding: '10px', marginBottom: '10px', alignSelf: message.sender === 'user' ? 'flex-end' : 'flex-start' }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {message.sender === 'user' ? (
+                <AccountCircle className="message-icon" />
+              ) : (
+                <SmartToy className="message-icon" />
+              )}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant="body1">{message.text}</Typography>
+                {message.research && message.research.length > 0 && (
+                  <div className="research-container" style={{ marginTop: '10px' }}>
+                    <Typography variant="h6">Research Papers:</Typography>
                     <ul>
-                      {responseData.research.map((paper, index) => (
-                        <li key={index}>
+                      {message.research.map((paper, idx) => (
+                        <li key={idx}>
                           <a href={paper.url} target="_blank" rel="noopener noreferrer">
                             {paper.title}
                           </a>
-                          <p>{paper.abstract}</p>
                         </li>
                       ))}
                     </ul>
-                  ) : (
-                    <p>No research papers found.</p>
-                  )}
-                </div>
-              )}
-              {responseData.image_url && (
-                <div className="image-section">
-                  <h3>Related Image:</h3>
-                  <img src={responseData.image_url} alt="Wildlife related" />
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
-    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Paper>
+        ))}
+      </div>
+    </Container>
   );
 }
 

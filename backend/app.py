@@ -38,8 +38,12 @@ def is_query_relevant(query, keywords_set):
 def chat():
     data = request.get_json()
     query = data.get("query", "")
+    chat_history = data.get("chatHistory", [])
     if not query:
         return jsonify({"error": "No query provided"}), 400
+    
+    # Combine chat history into a single context string
+    context = "\n".join([f"{msg['sender']}: {msg['text']}" for msg in chat_history])
 
     prompt = (
         "You are an AI assistant trained in advanced scientific research, specializing in wildlife, biodiversity, and conservation science in India. "
@@ -52,6 +56,7 @@ def chat():
         "5. Actionable recommendations aligned with India's legal frameworks, conservation programs, and global commitments like the Paris Agreement and CBD.\n\n"
         "Avoid vague statements or unsupported claims. If uncertainty exists, clarify the limitations of available data.\n"
         "Ensure the response is written in a formal, scientific tone, yet remains accessible to an educated audience.\n\n"
+        "Context (chat history):\n" + context + "\n\n"
         "Query: \"" + query + "\""
     )
     hf_answer = query_huggingface(prompt)

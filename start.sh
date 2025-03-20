@@ -30,18 +30,18 @@ echo "===== Setting up Backend ====="
 cd backend || { echo "Backend folder not found!"; exit 1; }
 
 # Create virtual environment if it doesn't exist
-if [ ! -d "venv" ]; then
-  echo "Creating virtual environment..."
-  python3 -m venv venv
-fi
+# if [ ! -d "venv" ]; then
+#   echo "Creating virtual environment..."
+#   python3 -m venv venv
+# fi
 
 # Activate virtual environment
-echo "Activating virtual environment..."
-source venv/bin/activate
+# echo "Activating virtual environment..."
+# source venv/bin/activate
 
 # Install required Python packages
-echo "Installing Python requirements..."
-pip install -r requirements.txt
+# echo "Installing Python requirements..."
+# pip install -r requirements.txt
 
 # Start Flask backend in background
 echo "Starting Flask backend..."
@@ -68,10 +68,10 @@ echo "===== Setting up Frontend ====="
 cd frontend || { echo "Frontend folder not found!"; exit 1; }
 
 # Check if node_modules exists; if not, install npm dependencies
-if [ ! -d "node_modules" ]; then
-  echo "Installing npm dependencies..."
-  npm install
-fi
+# if [ ! -d "node_modules" ]; then
+#   echo "Installing npm dependencies..."
+#   npm install
+# fi
 
 # Start React frontend
 echo "Starting React frontend..."
