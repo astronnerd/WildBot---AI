@@ -51,6 +51,7 @@ body {
   background-color: #F1F0F0;
   color: #18f662; /* Bot text color */
   align-self: flex-start;
+  margin-left: 10px;
   max-width: 60%; /* Bot message max width */
 }
 
@@ -102,7 +103,7 @@ body {
 
 .form-container {
   width: 100%;
-  margin-left: 10px;
+  margin-left: 20px;
   background-color: white;
   border-top: 1px solid #ccc;
 }
