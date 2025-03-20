@@ -112,7 +112,7 @@ function App() {
               )}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="body1">
-                <MuiMarkdown>{message.text}</MuiMarkdown>;
+                <MuiMarkdown>{message.text}</MuiMarkdown>
                 </Typography>
                 {message.research && message.research.length > 0 && (
                   <div className="research-container" style={{ marginTop: '10px' }}>
