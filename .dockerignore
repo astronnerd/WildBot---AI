@@ -132,5 +132,3 @@ dmypy.json
 **ollama
 **offline_docs
 **notebooks
-data
-.DS_Store
