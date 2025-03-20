@@ -16,7 +16,7 @@ from src.utils.DocumentParser import PDF4LLMReader
 class WildLifeRAG(BaseRAG):
     def __init__(self) -> None:
         self.folder_name = "wlidlife_research_papers"
-        self.docs_folder_path = os.path.join("/app/src/docs/", self.folder_name)
+        self.docs_folder_path = os.path.join("/app/src/docs/", self.folder_name) ## this need to be changed 
         super().__init__(self.docs_folder_path, self.folder_name)
         self.sbert_reranker = self.get_sbert_reranker(top_n=8)
         self.colbert_reranker = self.get_colbert_reranker(top_n=5)

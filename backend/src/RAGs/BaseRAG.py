@@ -11,7 +11,7 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 from llama_index.postprocessor.colbert_rerank import ColbertRerank
 from llama_index.postprocessor.flag_embedding_reranker import FlagEmbeddingReranker
 
-
+## this need to be updated
 from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
@@ -25,7 +25,7 @@ class BaseRAG:
         self.embed_model = self.get_embedding_model()
         self.llm = self.get_llm()
         self.vector_store = self.get_vector_store()
-        # self.ingestion_pipeline()
+        # self.ingestion_pipeline()  # to be run once to populate the data in qdrant
         self.index = self.get_v_index()
         # self.reranker = self.get_sbert_reranker()
 

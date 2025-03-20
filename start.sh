@@ -45,9 +45,9 @@ cd backend || { echo "Backend folder not found!"; exit 1; }
 
 # Start Flask backend in background
 echo "Starting Flask backend..."
-python3 app.py &
-BACKEND_PID=$!
-echo "Flask backend started with PID $BACKEND_PID"
+# python3 app.py &
+# BACKEND_PID=$!
+# echo "Flask backend started with PID $BACKEND_PID"
 
 # Ensure backend is stopped on script exit
 cleanup() {
