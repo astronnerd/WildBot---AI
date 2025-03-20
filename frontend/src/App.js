@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Container, TextField, Button, Paper, Typography, Box } from '@mui/material';
 import { AccountCircle, SmartToy } from '@mui/icons-material';
 import './App.css';
+import MuiMarkdown from 'mui-markdown';
 
 function App() {
   const [query, setQuery] = useState("");
@@ -110,7 +111,9 @@ function App() {
                 <SmartToy className="message-icon" />
               )}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="body1">{message.text}</Typography>
+                <Typography variant="body1">
+                <MuiMarkdown>{message.text}</MuiMarkdown>;
+                </Typography>
                 {message.research && message.research.length > 0 && (
                   <div className="research-container" style={{ marginTop: '10px' }}>
                     <Typography variant="h6">Research Papers:</Typography>
