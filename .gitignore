@@ -139,3 +139,5 @@ data
 .DS_Store
 .locks
 backend/src/RAGs/__init__.py
+
+models--Qdrant--SPLADE_PP_en_v1
